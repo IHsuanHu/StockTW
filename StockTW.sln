@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTW.Server", "StockTW.Server\StockTW.Server.csproj", "{AFAC6845-B222-4011-AC4E-E6592D044A18}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "stocktw.client", "stocktw.client\stocktw.client.esproj", "{1A23C319-3108-4F1A-BD09-7E43DBAFB3EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFAC6845-B222-4011-AC4E-E6592D044A18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFAC6845-B222-4011-AC4E-E6592D044A18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFAC6845-B222-4011-AC4E-E6592D044A18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFAC6845-B222-4011-AC4E-E6592D044A18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A23C319-3108-4F1A-BD09-7E43DBAFB3EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A23C319-3108-4F1A-BD09-7E43DBAFB3EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A23C319-3108-4F1A-BD09-7E43DBAFB3EB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1A23C319-3108-4F1A-BD09-7E43DBAFB3EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A23C319-3108-4F1A-BD09-7E43DBAFB3EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A23C319-3108-4F1A-BD09-7E43DBAFB3EB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {06E2F154-B7BE-4BB5-A35B-CEB484B6E023}
+	EndGlobalSection
+EndGlobal
