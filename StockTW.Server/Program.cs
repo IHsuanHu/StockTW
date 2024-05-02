@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using StockTW.Server.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,6 +19,10 @@ builder.Services.AddCors(options =>
                                  .AllowAnyMethod();
                       });
 });
+// Add DbContext with SQL Server Configuration
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 var app = builder.Build();
 
 app.UseDefaultFiles();

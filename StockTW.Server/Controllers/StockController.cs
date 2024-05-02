@@ -53,10 +53,8 @@ public class RealTimePrice
         if (response.IsSuccessStatusCode)
         {
             var responseBoby = response.Content.ReadAsStringAsync().Result.Trim();
-            if (!string.IsNullOrEmpty(responseBoby)) { 
-                StockApiResponse stockApiResponse = JsonConvert.DeserializeObject<StockApiResponse>(responseBoby);
-                if (stockApiResponse != null) { stockInfoList = stockApiResponse.MsgArray; }
-            }
+            StockApiResponse stockApiResponse = JsonConvert.DeserializeObject<StockApiResponse>(responseBoby);
+            stockInfoList = stockApiResponse.MsgArray;
             
         }
         client.Dispose();
