@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using StockTW.Server.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,15 +17,32 @@ builder.Services.AddCors(options =>
                       {
                           builder.WithOrigins("https://localhost:5173") // Replace with the URL of your frontend application
                                  .AllowAnyHeader()
-                                 .AllowAnyMethod();
+                                 .AllowAnyMethod()
+                                 .AllowCredentials();
                       });
 });
 // Add DbContext with SQL Server Configuration
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Configure Cookie Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.LoginPath = "/users/login";
+    options.LogoutPath = "/users/logout";
+    options.ExpireTimeSpan = TimeSpan.FromDays(30); // Cookie expiration
+});
+
 var app = builder.Build();
 
+// Use static files and default files
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
@@ -40,7 +58,12 @@ app.UseHttpsRedirection();
 // Use CORS policy
 app.UseCors("MyAllowSpecificOrigins");
 
+// Authentication & Authorization
+app.UseAuthentication();
 app.UseAuthorization();
+
+// Use Routing
+app.UseRouting();
 
 app.MapControllers();
 

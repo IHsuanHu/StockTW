@@ -7,5 +7,5 @@ Accept: application/json
 GET {{StockTW.Server_HostAddress}}/users/
 Accept: application/json
 
-GET {{StockTW.Server_HostAddress}}/users/{username}/
+POST {{StockTW.Server_HostAddress}}/users/login/
 Accept: application/json

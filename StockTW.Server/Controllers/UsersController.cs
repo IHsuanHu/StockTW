@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Crypto.Generators;
 using StockTW.Server.Data;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace StockTW.Server.Controllers
 {
@@ -39,18 +42,34 @@ namespace StockTW.Server.Controllers
             await _dataContext.SaveChangesAsync();
             return Ok(user);
         }
-        [HttpGet("username")]
-        public async Task<ActionResult<User>> GetUserById(string username)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
         {
-            // Use FirstOrDefaultAsync to find the user by username
-            var user = await _dataContext.Users.Where(u => u.Username == username).FirstOrDefaultAsync(); 
-            if (user == null)
+            var user = await _dataContext.Users.FirstOrDefaultAsync(u => u.Username == userLoginDto.Username);
+            if (user != null && BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password))
             {
-                return NotFound();
+                var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.Username),new Claim(ClaimTypes.NameIdentifier, user.Username)};
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var authProperties = new AuthenticationProperties{ RedirectUri = "/"};
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+                return Ok(new { success = true });
             }
-            return Ok(user);
+            return Unauthorized("Invalid username or password");
         }
 
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Ok(new {success = true});
+        }
+        [HttpGet("check-login")]
+        public IActionResult CheckLogin()
+        {
+            bool isLoggedIn = User.Identity.IsAuthenticated;
+            return Ok(new {isLoggedIn});
+        }
 
     }
 }
