@@ -33,19 +33,20 @@ namespace StockTW.Server.Controllers
             {
                 return BadRequest("User is null");
             }
-            if (_dataContext.Users.Any(u => u.Username == user.Username))
+            if (_dataContext.Users.Any(u => u.Username == user.Username.ToLower()))
             { 
                 return BadRequest("Username already exists.");
             }
+            user.Username = user.Username.ToLower();
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             _dataContext.Users.Add(user);
             await _dataContext.SaveChangesAsync();
-            return Ok(user);
+            return Ok(new { success = true, message = "User created successfully" });
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
         {
-            var user = await _dataContext.Users.FirstOrDefaultAsync(u => u.Username == userLoginDto.Username);
+            var user = await _dataContext.Users.FirstOrDefaultAsync(u => u.Username == userLoginDto.Username.ToLower());
             if (user != null && BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password))
             {
                 var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.Username),new Claim(ClaimTypes.NameIdentifier, user.Username)};

@@ -6,12 +6,23 @@
 }
 .button-top-right {
     position: fixed;
-    top: 10px;
-    right: 10px;
+    top: 20px;
+    right: 40px;
+    width: 100px;
     z-index: 1000;
 }
+.SignLog {
+    position: fixed;
+    top: 40px;
+    right: 25px;
+    
+}
+.SignLog button{
+    width: 100px;
+    margin: 0 10px;
+}
 
-.login-modal-backdrop {
+.modal-backdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -21,4 +32,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.stock{
+    width:820px;
+    margin-top:-100px;
 }

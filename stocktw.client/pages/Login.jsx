@@ -1,24 +1,24 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import './Login.css';
 
-const Login = ({ setIsLoggedIn, setShowLogin }) => {
+const Login = ({ setIsLoggedIn, setShowLogin, setShowSignup, setStockData }) => {
     const [username, setUsername] = useState(""); 
     const [password, setPassword] = useState("");
 
-    function handleUsernameChange(e) {
+    function usernameChange(e) {
         setUsername(e.target.value);
     }
 
-    function handlePasswordChange(e) {
+    function passwordChange(e) {
         setPassword(e.target.value);
     }
 
     async function userCheck() {
         const serverUrl = `https://localhost:7188/users/login`;
         const options = {
-            method: "POST", 
-            headers: { 'Content-Type': 'application/json' }, 
-            body: JSON.stringify({ username, password }), 
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password }),
             credentials: 'include'
         };
 
@@ -27,6 +27,9 @@ const Login = ({ setIsLoggedIn, setShowLogin }) => {
             if (!response.ok) throw new Error('Invalid username or password');
             const data = await response.json();
             if (data.success) {
+                // 先清除旧数据再设置登录状态
+                setStockData([]);
+                localStorage.removeItem('stockData'); // 清除本地存储的股票数据
                 setIsLoggedIn(true);
                 setShowLogin(false);
             } else {
@@ -41,16 +44,21 @@ const Login = ({ setIsLoggedIn, setShowLogin }) => {
     return (
         <div className="login-modal-backdrop">
             <div className="login-modal">
-                <h2>Login</h2>
+                <h2>Log In</h2>
+                <form onSubmit={(e) => { e.preventDefault(); userCheck();}}>
                 <label>
                     Username:
-                    <input type="text" value={username} onChange={handleUsernameChange} />
+                    <input type="text" value={username} onChange={usernameChange} autoFocus />
                 </label>
                 <label>
                     Password:
-                    <input type="password" value={password} onChange={handlePasswordChange} />
+                    <input type="password" value={password} onChange={passwordChange} />
                 </label>
-                <button onClick={userCheck}>Log In</button>
+                    <button type="submit">Log In</button>
+                </form>
+                <p className="toggle-form">
+                    Need an account? <a href="#" onClick={(e) => { e.preventDefault(); setShowLogin(false); setShowSignup(true);}}>Sign up here</a>
+                </p>
             </div>
         </div>
     );

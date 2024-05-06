@@ -1,0 +1,27 @@
+﻿/* Search.css */
+.search-container {
+    text-align: center;
+  
+}
+
+.searchbar {
+    width: 50%; 
+    padding: 8px 10px;
+    margin: 10px 5px; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add {
+    padding: 7px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top:15px;
+}
+
+.add:hover {
+    background-color: #0056b3;
+}

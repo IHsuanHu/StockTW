@@ -1,4 +1,5 @@
-﻿import { useState } from "react";
+﻿import './Search.css';
+import { useState } from "react";
 
 const Search = ({ add }) => {
 
@@ -8,17 +9,25 @@ const Search = ({ add }) => {
         setStockNumber(e.target.value)
     }
     function handleSubmit(e) {
-        e.preventDefault();  // 防止表单的默认提交行为
+        e.preventDefault();  
         add(stockNumber);
-        setStockNumber("");  // 可选：提交后清空输入框
+        setStockNumber("");  
     }
-    return <div>
-        <h1>Stock Search</h1>
-        <form onSubmit={handleSubmit}>  {/* 使用表单元素封装输入和按钮 */}
-            <input type="text" value={stockNumber} onChange={stockNumberChange} placeholder="Enter stock code" />
-            <button type="submit" className="add">Search</button>
-        </form>
-    </div>
+    return (
+        <div className="search-container">
+            <h1>Stock Search</h1>
+            <form onSubmit={handleSubmit}>
+                <input
+                    className="searchbar"
+                    type="text"
+                    value={stockNumber}
+                    onChange={stockNumberChange}
+                    placeholder="Enter stock code using blank or comma to separate"
+                />
+                <button type="submit" className="add">Search</button>
+            </form>
+        </div>
+    );
 }
 
 export default Search;
