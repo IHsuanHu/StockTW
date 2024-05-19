@@ -1,5 +1,5 @@
 <div align="center">
-  StockTW
+  <h1>StockTW</h1>
 </div>
 
 ###Project Overview
