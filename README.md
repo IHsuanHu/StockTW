@@ -2,7 +2,7 @@
   <h1>StockTW</h1>
 </div>
 
-###Project Overview
+### Project Overview
 
 This project is crafted as a full-stack web application, utilizing Microsoft SQL Server for database management, .NET Core 8 for the backend, and React for the frontend, creating a dedicated solution for monitoring and analyzing financial markets. The backend, developed with .NET Core 8, ensures robust data handling and real-time processing capabilities, essential for managing live stock market information from the Taiwan stock exchange.
 
